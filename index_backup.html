@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OR Instrument Coach</title>
+
+  <!-- 글꼴 (인터넷 연결이 없으면 컴퓨터 기본 글꼴로 표시됨) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- 메인 화면 디자인 파일 -->
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+  <!-- ===== 상단 메뉴 바 ===== -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="index.html" class="logo">OR Instrument Coach</a>
+      <nav class="topnav">
+        <a href="#modes">학습 모드</a>
+        <a href="#surgeries">수술 선택</a>
+        <a href="#progress">학습 현황</a>
+        <a href="#help">도움말</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===== ① 사이트 타이틀 / 소개 ===== -->
+    <section class="hero">
+      <div class="container">
+        <p class="hero-label">수술기구 학습 콘텐츠</p>
+        <h1 class="hero-title">OR Instrument Coach</h1>
+        <p class="hero-desc">
+          수술 흐름을 이해하고, 기구를 <strong>보고 · 듣고 · 선택하며</strong> 익히는 수술기구 학습
+        </p>
+        <p class="hero-target">학습 대상 <span>간호학생 · 간호사</span></p>
+
+        <!-- 학습 순서 안내 -->
+        <ol class="flow">
+          <li><span class="flow-num">1</span>학습 모드 선택</li>
+          <li><span class="flow-num">2</span>수술 선택</li>
+          <li><span class="flow-num">3</span>문제 풀고 피드백 확인</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== ② 학습 모드 선택 ===== -->
+    <section id="modes" class="section">
+      <div class="container">
+        <h2 class="section-title">학습 모드</h2>
+        <p class="section-desc">두 가지 방법으로 수술기구를 학습합니다. 원하는 모드를 선택하세요.</p>
+
+        <div class="mode-grid">
+
+          <!-- Doctor Mode 카드 -->
+          <article class="mode-card mode-doctor">
+            <div class="mode-head">
+              <span class="mode-tag">판단하기</span>
+              <h3 class="mode-name">Doctor Mode</h3>
+              <p class="mode-sub">수술 진행상황을 보고 필요한 기구를 판단합니다.</p>
+            </div>
+            <div class="mode-body">
+              <p class="mode-key-label">핵심 학습</p>
+              <ol class="mode-steps">
+                <li>수술 흐름 이해</li>
+                <li>필요한 기구 판단</li>
+                <li>다음 기구 예측</li>
+              </ol>
+              <p class="mode-note">
+                현재 수술 단계와 상황을 읽고, 그 단계에서 필요한 기구를 선택지에서 고릅니다.
+              </p>
+              <button type="button" class="btn btn-doctor" data-mode="Doctor Mode">시작하기</button>
+            </div>
+          </article>
+
+          <!-- Scrub Mode 카드 -->
+          <article class="mode-card mode-scrub">
+            <div class="mode-head">
+              <span class="mode-tag">듣고 찾기</span>
+              <h3 class="mode-name">Scrub Mode</h3>
+              <p class="mode-sub">의사의 기구 요청을 듣고 올바른 기구를 선택합니다.</p>
+            </div>
+            <div class="mode-body">
+              <p class="mode-key-label">핵심 학습</p>
+              <ol class="mode-steps">
+                <li>기구명 듣기</li>
+                <li>기구 식별</li>
+                <li>정확한 기구 선택</li>
+              </ol>
+              <p class="mode-note">
+                예) "메첸바움 주세요." 음성을 듣고, 비슷한 기구들 중에서 정확한 기구를 고릅니다.
+              </p>
+              <button type="button" class="btn btn-scrub" data-mode="Scrub Mode">시작하기</button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ③ 수술 선택 ===== -->
+    <section id="surgeries" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">수술 선택</h2>
+        <p class="section-desc">현재 학습할 수 있는 수술입니다. 카드를 눌러 학습할 수술을 선택하세요.</p>
+
+        <!-- 수술 카드는 js/home.js 가 data/surgeries.js 목록을 읽어서 여기에 자동으로 넣습니다 -->
+        <div id="surgery-list" class="surgery-grid"></div>
+
+        <p id="selected-surgery" class="selected-text">선택한 수술: 없음</p>
+      </div>
+    </section>
+
+    <!-- ===== ④ 학습 진행 상태 ===== -->
+    <section id="progress" class="section">
+      <div class="container">
+        <h2 class="section-title">
+          나의 학습 현황
+          <span class="badge-sample">예시 화면</span>
+        </h2>
+        <p class="section-desc">
+          아래 내용은 화면 구성 예시입니다. 학습 기록 저장 기능은 다음 단계에서 연결됩니다.
+        </p>
+
+        <div class="progress-grid">
+
+          <!-- 최근 학습 -->
+          <div class="panel">
+            <h3 class="panel-title">최근 학습</h3>
+            <ul class="recent-list">
+              <li><span class="chip chip-doctor">Doctor</span> 충수절제술 · 피부 절개 단계</li>
+              <li><span class="chip chip-scrub">Scrub</span> 제왕절개술 · 기구 요청 5문제</li>
+            </ul>
+          </div>
+
+          <!-- 학습 진행률 -->
+          <div class="panel">
+            <h3 class="panel-title">학습 진행률</h3>
+            <div class="bar-row">
+              <span class="bar-label">충수절제술</span>
+              <div class="bar"><div class="bar-fill" style="width: 40%;"></div></div>
+              <span class="bar-value">40%</span>
+            </div>
+            <div class="bar-row">
+              <span class="bar-label">제왕절개술</span>
+              <div class="bar"><div class="bar-fill" style="width: 15%;"></div></div>
+              <span class="bar-value">15%</span>
+            </div>
+          </div>
+
+          <!-- 이어서 학습하기 -->
+          <div class="panel">
+            <h3 class="panel-title">이어서 학습하기</h3>
+            <p class="panel-text">마지막으로 학습하던 단계부터 다시 시작합니다.</p>
+            <button type="button" class="btn btn-outline" disabled>준비 중</button>
+          </div>
+
+          <!-- 틀린 기구 복습 -->
+          <div class="panel">
+            <h3 class="panel-title">틀린 기구 복습</h3>
+            <ul class="wrong-list">
+              <li>Metzenbaum scissors</li>
+              <li>Kelly forceps</li>
+              <li>Allis forceps</li>
+            </ul>
+            <button type="button" class="btn btn-outline" disabled>준비 중</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ⑤ 사용방법 / 도움말 ===== -->
+    <!-- <details> 태그는 클릭하면 내용이 펼쳐지는 기본 HTML 기능입니다 (JavaScript 필요 없음) -->
+    <section id="help" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">사용방법 · 도움말</h2>
+
+        <div class="help-list">
+          <details>
+            <summary>어떤 순서로 학습하나요?</summary>
+            <p>학습 모드(Doctor 또는 Scrub)를 고르고, 학습할 수술을 선택한 뒤 문제를 풉니다. 문제마다 정답/오답 피드백이 나오고 다음 문제로 넘어갑니다.</p>
+          </details>
+          <details>
+            <summary>Doctor Mode와 Scrub Mode는 무엇이 다른가요?</summary>
+            <p><strong>Doctor Mode</strong>는 "지금 이 단계에서 어떤 기구가 필요할까?"를 스스로 판단하는 연습입니다. <strong>Scrub Mode</strong>는 의사가 부르는 기구 이름을 듣고 해당 기구를 빠르게 찾는 연습입니다.</p>
+          </details>
+          <details>
+            <summary>Doctor Mode의 난이도는 어떻게 구성되나요?</summary>
+            <p>기본: 기구 이미지를 보고 이름 고르기 → 중간: 수술 단계와 기구 이미지를 보고 이름 고르기 → 심화: 수술 상황만 보고 필요한 기구 이미지 고르기 순서로 구성될 예정입니다.</p>
+          </details>
+          <details>
+            <summary>Scrub Mode의 음성은 어떤 발음인가요?</summary>
+            <p>한국 수술실에서 실제로 사용하는 기구 호출 표현과 발음을 기준으로, 미리 제작·검토한 음성파일을 재생합니다. 모든 학습자가 같은 음성을 듣게 됩니다. 소리가 나오도록 스피커나 이어폰을 준비하세요.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 하단 ===== -->
+  <footer class="footer">
+    <div class="container">
+      <p>OR Instrument Coach · 간호학생과 간호사를 위한 수술기구 학습</p>
+    </div>
+  </footer>
+
+  <!-- 아직 만들지 않은 기능을 눌렀을 때 보여줄 안내 메시지 상자 -->
+  <div id="notice" class="notice" hidden></div>
+
+  <!-- JavaScript 파일 (순서 중요: 데이터 먼저, 기능 나중) -->
+  <script src="data/surgeries.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

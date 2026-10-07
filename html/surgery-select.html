@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수술 선택 · OR Instrument Coach</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/learn.css">
+</head>
+<!-- 주소 예시: surgery-select.html?mode=doctor  또는  surgery-select.html?mode=scrub -->
+<body data-root="../">
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="../index.html" class="logo">OR Instrument Coach</a>
+      <nav class="topnav">
+        <a href="../index.html#prelearn">사전학습</a>
+        <a href="../index.html#modes">학습모드</a>
+        <a href="../index.html#results">학습결과</a>
+        <a href="../index.html#help">학습방법 · 도움말</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 제목과 설명은 js/surgery-select.js 가 모드에 맞게 채웁니다 -->
+  <section class="page-head">
+    <div class="container">
+      <p class="page-label">② 학습모드 · 수술 선택</p>
+      <h1 class="page-title" id="page-title">수술 선택</h1>
+      <p class="page-desc" id="page-desc"></p>
+      <span class="key-action" id="key-action" hidden></span>
+    </div>
+  </section>
+
+  <main class="container page-body">
+    <!-- 사전학습 기준 미충족 / 잘못된 주소일 때 안내 -->
+    <p class="info-box" id="info-box" hidden></p>
+
+    <!-- 수술 카드: js/surgery-select.js 가 data/surgeries.js 목록을 읽어서 만듭니다 -->
+    <div id="surgery-list" class="surgery-grid"></div>
+
+    <div class="btn-row">
+      <a href="../index.html#modes" class="btn btn-outline">← 학습모드 다시 선택</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>OR Instrument Coach · 수술실 입문 학습자를 위한 수술기구 학습</p>
+    </div>
+  </footer>
+
+  <script src="../js/config.js"></script>
+  <script src="../data/surgeries.js"></script>
+  <script src="../data/instruments.js"></script>
+  <script src="../data/appendectomy.js"></script>
+  <script src="../data/cesarean.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/learning-data.js"></script>
+  <script src="../js/surgery-select.js"></script>
+</body>
+</html>

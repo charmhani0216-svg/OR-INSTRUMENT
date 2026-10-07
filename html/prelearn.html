@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>사전학습 · OR Instrument Coach</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/learn.css">
+</head>
+<!-- data-root="../" : 이 페이지는 html 폴더 안에 있어서 이미지·음성 경로 앞에 ../ 를 붙인다는 표시 -->
+<body data-root="../">
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="../index.html" class="logo">OR Instrument Coach</a>
+      <nav class="topnav">
+        <a href="../index.html#prelearn">사전학습</a>
+        <a href="../index.html#modes">학습모드</a>
+        <a href="../index.html#results">학습결과</a>
+        <a href="../index.html#help">학습방법 · 도움말</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== 페이지 제목 (맞춤 재학습일 때는 js/prelearn.js 가 제목을 바꿉니다) ===== -->
+  <section class="page-head">
+    <div class="container">
+      <p class="page-label">① 사전학습</p>
+      <h1 class="page-title" id="page-title">사전학습</h1>
+      <p class="page-desc" id="page-desc">수술기구를 보고, 명칭을 듣고, 직접 말하며 익힙니다.</p>
+      <span class="key-action key-prelearn">보기 → 듣기 → 말하기</span>
+    </div>
+  </section>
+
+  <main class="container page-body">
+
+    <!-- ===== 학습 전 장치 확인 (스피커 → 마이크) ===== -->
+    <section id="device-section">
+      <h2 class="section-title">학습 전 장치 확인</h2>
+      <p class="section-desc">스피커 테스트 → 마이크 테스트 순서로 확인하세요.</p>
+      <div id="device-check" class="device-check"></div>
+    </section>
+
+    <!-- ===== 시작 안내 ===== -->
+    <section id="intro-panel" class="panel">
+      <h2 class="panel-title" id="intro-title">학습 준비도</h2>
+      <p id="intro-text"></p>
+      <div class="btn-row">
+        <button type="button" class="btn btn-prelearn" id="btn-start-all">전체 사전학습 시작</button>
+        <button type="button" class="btn btn-outline" id="btn-start-failed" hidden>아직 성공하지 못한 기구만 연습</button>
+      </div>
+    </section>
+
+    <!-- ===== 기구 학습 카드 (학습을 시작하면 나타남) ===== -->
+    <section id="learn-card" class="learn-card" hidden>
+      <div class="learn-card-top">
+        <span class="progress-text" id="progress-text"></span>
+      </div>
+
+      <!-- 1) 기구 이미지 보기 -->
+      <div class="image-box" id="instrument-image"></div>
+
+      <div>
+        <h2 class="instrument-name" id="instrument-name"></h2>
+        <p class="instrument-name-ko" id="instrument-name-ko"></p>
+      </div>
+
+      <!-- 2) 듣기  3) 말하기 -->
+      <div class="action-row">
+        <button type="button" class="btn btn-outline" id="btn-listen">🔊 기구명 듣기</button>
+        <button type="button" class="btn btn-prelearn" id="btn-speak">🎤 따라 말하기</button>
+      </div>
+
+      <!-- 음성인식을 쓸 수 없는 브라우저에서만 나타나는 입력칸 -->
+      <div class="text-fallback" id="text-fallback" hidden>
+        <input type="text" id="text-input" placeholder="이 브라우저는 음성인식을 지원하지 않아 직접 입력합니다">
+      </div>
+
+      <p class="status-text" id="status-text"></p>
+
+      <!-- 4) O/X 결과 -->
+      <div id="feedback" hidden></div>
+
+      <div class="action-row">
+        <button type="button" class="btn btn-outline" id="btn-next">다음 기구</button>
+      </div>
+    </section>
+
+    <!-- ===== 학습 마침 화면 ===== -->
+    <section id="done-panel" class="panel" hidden>
+      <h2 class="panel-title" id="done-title"></h2>
+      <div id="done-text"></div>
+      <div class="btn-row" id="done-buttons"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>OR Instrument Coach · 수술실 입문 학습자를 위한 수술기구 학습</p>
+    </div>
+  </footer>
+
+  <div id="notice" class="notice" hidden></div>
+
+  <!-- 설정 → 데이터 → 공통 기능 → 이 페이지 기능 순서 -->
+  <script src="../js/config.js"></script>
+  <script src="../data/surgeries.js"></script>
+  <script src="../data/instruments.js"></script>
+  <script src="../data/appendectomy.js"></script>
+  <script src="../data/cesarean.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/learning-data.js"></script>
+  <script src="../js/speech.js"></script>
+  <script src="../js/device-check.js"></script>
+  <script src="../js/prelearn.js"></script>
+</body>
+</html>

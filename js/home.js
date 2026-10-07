@@ -1,89 +1,102 @@
 // =============================================
 // 메인 화면(index.html) 기능
-// 1) 수술 카드 만들기  2) 수술 선택하기  3) 준비 중 안내 메시지
+// 1) 사전학습 준비도 표시
+// 2) 학습모드 버튼 잠금 / 열림
+// 3) 최근 학습결과 목록
+// 4) 학습 기록 지우기
 // =============================================
 
-// 현재 선택된 수술 (처음에는 아무것도 선택되지 않음)
-let selectedSurgery = null;
 
+// ---------- 1) 사전학습 준비도 표시 ----------
+function renderReadiness() {
+  const readiness = LearningData.getReadiness(INSTRUMENTS);
 
-// ---------- 1) 수술 카드 만들기 ----------
-// data/surgeries.js 의 SURGERIES 목록을 하나씩 꺼내서 카드로 만듭니다.
-function renderSurgeryCards() {
-  const list = document.getElementById("surgery-list");
+  document.getElementById("readiness-value").textContent = readiness.percent + "%";
+  document.getElementById("readiness-bar").style.width = readiness.percent + "%";
+  document.getElementById("readiness-text").textContent =
+    "등록된 기구 " + readiness.total + "개 중 " + readiness.successCount + "개 기구명 음성인식 성공 · " +
+    "기준 " + MASTERY_THRESHOLD + "% " + (readiness.isMet ? "충족 ✓" : "미충족");
 
-  SURGERIES.forEach(function (surgery) {
-    // 대표 이미지가 있으면 이미지를, 없으면 "이미지 준비 중" 빈 공간을 보여줍니다.
-    let imageHtml;
-    if (surgery.image) {
-      imageHtml = '<img src="' + surgery.image + '" alt="' + surgery.nameKo + ' 대표 이미지">';
-    } else {
-      imageHtml = '<span class="image-empty">대표 이미지 준비 중</span>';
-    }
-
-    // 카드 한 장 만들기 (button 이라서 키보드로도 선택 가능)
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "surgery-card";
-    card.innerHTML =
-      '<div class="surgery-image">' + imageHtml + '</div>' +
-      '<div class="surgery-info">' +
-        '<h3 class="surgery-name">' + surgery.nameKo + '</h3>' +
-        '<p class="surgery-en">' + surgery.nameEn + '</p>' +
-        '<p class="surgery-summary">' + surgery.summary + '</p>' +
-      '</div>';
-
-    // 카드를 누르면 그 수술을 선택
-    card.addEventListener("click", function () {
-      selectSurgery(surgery, card);
-    });
-
-    list.appendChild(card);
+  // 도움말 안의 기준값 표시
+  document.querySelectorAll(".js-threshold").forEach(function (el) {
+    el.textContent = MASTERY_THRESHOLD + "%";
   });
 }
 
 
-// ---------- 2) 수술 선택하기 ----------
-function selectSurgery(surgery, card) {
-  selectedSurgery = surgery;
+// ---------- 2) 학습모드 버튼 잠금 / 열림 ----------
+// 사전학습 준비도 기준을 충족하기 전에는 "수술 선택하기" 버튼을 잠급니다.
+// (js/config.js 의 REQUIRE_PRELEARN_FOR_MODES 가 false 이면 항상 열림)
+function setupModeLinks() {
+  if (isModeUnlocked()) return;
 
-  // 모든 카드의 선택 표시를 지우고, 누른 카드에만 선택 표시
-  document.querySelectorAll(".surgery-card").forEach(function (c) {
-    c.classList.remove("is-selected");
-  });
-  card.classList.add("is-selected");
+  const info = document.getElementById("mode-lock-info");
+  info.textContent =
+    "사전학습의 학습 준비도가 " + MASTERY_THRESHOLD + "% 이상이 되면 학습모드를 시작할 수 있습니다. 먼저 사전학습을 진행해 주세요.";
+  info.hidden = false;
 
-  document.getElementById("selected-surgery").textContent =
-    "선택한 수술: " + surgery.nameKo + " (" + surgery.nameEn + ")";
-}
-
-
-// ---------- 3) 준비 중 안내 메시지 ----------
-// Doctor Mode / Scrub Mode 퀴즈 페이지는 아직 만들지 않았으므로 안내만 보여줍니다.
-// (다음 단계에서 이 부분을 실제 페이지로 이동하도록 바꿀 예정)
-function showNotice(message) {
-  const notice = document.getElementById("notice");
-  notice.textContent = message;
-  notice.hidden = false;
-
-  // 3초 뒤에 메시지 숨기기
-  clearTimeout(showNotice.timer);
-  showNotice.timer = setTimeout(function () {
-    notice.hidden = true;
-  }, 3000);
-}
-
-function setupModeButtons() {
-  document.querySelectorAll("[data-mode]").forEach(function (button) {
-    button.addEventListener("click", function () {
-      const modeName = button.dataset.mode;
-      let surgeryText = selectedSurgery ? selectedSurgery.nameKo + " · " : "";
-      showNotice(surgeryText + modeName + " 학습 페이지는 다음 단계에서 제작됩니다.");
+  document.querySelectorAll("[data-mode-link]").forEach(function (link) {
+    link.classList.add("is-disabled");
+    link.setAttribute("aria-disabled", "true");
+    link.textContent = "사전학습 기준 충족 후 이용 가능";
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      showNotice("사전학습 준비도 " + MASTERY_THRESHOLD + "% 이상이 필요합니다.");
     });
+  });
+}
+
+
+// ---------- 3) 최근 학습결과 목록 ----------
+function renderResults() {
+  const list = document.getElementById("result-list");
+  const sessions = LearningData.getFinishedSessions(["doctor", "scrub"]).slice(0, 5);
+
+  if (sessions.length === 0) {
+    document.getElementById("result-empty").hidden = false;
+    return;
+  }
+
+  sessions.forEach(function (session) {
+    const surgery = findSurgery(session.surgeryId);
+    const summary = LearningData.summarizeSession(session);
+
+    const item = document.createElement("li");
+    item.className = "result-item";
+    item.innerHTML =
+      '<div>' +
+        '<p class="result-item-title">' +
+          '<span class="chip chip-' + session.mode + '">' + modeLabel(session.mode) + '</span> ' +
+          (surgery ? surgery.nameKo : session.surgeryId) +
+          (session.isRetry ? ' · 틀렸던 문제 재도전' : '') +
+        '</p>' +
+        '<p class="result-item-meta">' +
+          formatDateTime(session.endedAt) +
+          ' · 최초 시도 정답률 ' + formatPercent(summary.firstAttemptRate) +
+          ' · 최종 성공률 ' + formatPercent(summary.finalRate) +
+          ' · 재학습 필요 기구 ' + summary.wrongInstrumentIds.length + '개' +
+        '</p>' +
+      '</div>' +
+      '<a class="btn btn-outline btn-small" href="html/result.html?session=' + encodeURIComponent(session.sessionId) + '">결과 보기</a>';
+
+    list.appendChild(item);
+  });
+}
+
+
+// ---------- 4) 학습 기록 지우기 ----------
+function setupClearButton() {
+  document.getElementById("btn-clear-data").addEventListener("click", function () {
+    const ok = confirm("이 브라우저에 저장된 사전학습 기록과 학습결과를 모두 지울까요?\n지운 기록은 되돌릴 수 없습니다.");
+    if (!ok) return;
+    LearningData.clearAll();
+    location.reload();
   });
 }
 
 
 // ---------- 페이지가 열리면 실행 ----------
-renderSurgeryCards();
-setupModeButtons();
+renderReadiness();
+setupModeLinks();
+renderResults();
+setupClearButton();

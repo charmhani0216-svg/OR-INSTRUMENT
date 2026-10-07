@@ -1,0 +1,71 @@
+/* =============================================
+   Scrub Mode 전용 디자인 (html/scrub.html)
+   공통 디자인은 css/style.css, css/learn.css 에 있습니다.
+   ============================================= */
+
+/* 의사 요청 영역 */
+.request-box {
+  background: var(--scrub-soft);
+  border-radius: 10px;
+  padding: 16px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.request-label {
+  font-weight: 700;
+  color: var(--scrub);
+}
+
+.request-fallback {
+  font-size: 15px;
+}
+
+/* 기구 이미지 선택지 */
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.choice-card {
+  /* button 기본 모양 지우기 */
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 10px;
+
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.choice-card:hover:not(:disabled) {
+  border-color: var(--scrub);
+}
+
+.choice-card:disabled {
+  cursor: default;
+}
+
+.choice-card img {
+  max-height: 160px;
+  object-fit: contain;
+}
+
+/* 선택 후 정답 / 오답 표시 */
+.choice-card.is-correct {
+  border-color: var(--correct);
+  background: var(--correct-soft);
+}
+
+.choice-card.is-wrong {
+  border-color: var(--wrong);
+  background: var(--wrong-soft);
+}

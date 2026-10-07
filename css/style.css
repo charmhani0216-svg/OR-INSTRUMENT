@@ -1,0 +1,320 @@
+/* =============================================
+   모든 페이지 공통 디자인
+   ---------------------------------------------
+   색상, 글꼴, 상단 바, 버튼, 카드, 도움말, 하단 등
+   여러 페이지에서 함께 쓰는 디자인을 모아둔 파일입니다.
+   색상은 아래 :root 에 모아두었습니다.
+   여기 값만 바꾸면 사이트 전체 색이 함께 바뀝니다.
+   ============================================= */
+
+:root {
+  /* 기본 색 */
+  --bg: #f4f7f8;          /* 화면 배경 */
+  --surface: #ffffff;     /* 카드 배경 */
+  --surface-alt: #eaf0f2; /* 구역 구분용 배경 */
+  --text: #1c2b33;        /* 기본 글자 */
+  --muted: #5b6b73;       /* 보조 글자 */
+  --line: #d9e2e6;        /* 테두리 선 */
+  --brand: #0f3b45;       /* 상단 바 (수술실 짙은 청록) */
+
+  /* 사전학습 색 (청록 계열) */
+  --prelearn: #2b6f7d;
+  --prelearn-soft: #e3f0f2;
+
+  /* Doctor Mode 색 (파란 계열) */
+  --doctor: #1f5f99;
+  --doctor-soft: #e8f0f8;
+
+  /* Scrub Mode 색 (수술복 초록 계열) */
+  --scrub: #157a63;
+  --scrub-soft: #e4f3ee;
+
+  /* 정답 / 오답 표시 색 */
+  --correct: #1e8a4c;
+  --correct-soft: #e5f5ec;
+  --wrong: #c0392b;
+  --wrong-soft: #fbeaea;
+
+  --radius: 12px;
+}
+
+/* ---------- 기본 설정 ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* hidden 속성이 붙은 요소는 항상 숨기기 */
+[hidden] {
+  display: none !important;
+}
+
+/* 내용 가운데 정렬 + 최대 너비 */
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---------- 상단 메뉴 바 ---------- */
+.topbar {
+  background: var(--brand);
+  color: #fff;
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 56px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.2px;
+}
+
+.topnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 14px;
+}
+
+.topnav a {
+  text-decoration: none;
+  opacity: 0.85;
+}
+
+.topnav a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* ---------- 공통 구역 ---------- */
+.section {
+  padding: 48px 0;
+}
+
+.section-alt {
+  background: var(--surface-alt);
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.section-desc {
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+/* ---------- 공통 버튼 ---------- */
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn-prelearn { background: var(--prelearn); color: #fff; }
+.btn-doctor   { background: var(--doctor);   color: #fff; }
+.btn-scrub    { background: var(--scrub);    color: #fff; }
+.btn-brand    { background: var(--brand);    color: #fff; }
+
+.btn-prelearn:hover,
+.btn-doctor:hover,
+.btn-scrub:hover,
+.btn-brand:hover {
+  filter: brightness(1.1);
+}
+
+.btn-outline {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--text);
+}
+
+.btn-outline:hover {
+  border-color: var(--muted);
+}
+
+.btn-small {
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+.btn:disabled,
+.btn.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  filter: none;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ---------- 공통 카드(패널) ---------- */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel-title {
+  font-size: 16px;
+}
+
+.panel-text {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ---------- 작은 표시 (배지, 칩) ---------- */
+.badge-sample {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #fff4de;
+  color: #8a5a00;
+  border: 1px solid #f0d9a8;
+  align-self: flex-start;  /* 세로 배치 안에서 글자 길이만큼만 차지 */
+}
+
+.chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0 8px;
+  border-radius: 6px;
+  margin-right: 4px;
+}
+
+.chip-prelearn { background: var(--prelearn-soft); color: var(--prelearn); }
+.chip-doctor   { background: var(--doctor-soft);   color: var(--doctor); }
+.chip-scrub    { background: var(--scrub-soft);    color: var(--scrub); }
+
+/* 이미지가 아직 없을 때 보여주는 "이미지 준비 중" 상자 */
+.image-empty {
+  color: var(--muted);
+  font-size: 14px;
+  border: 1px dashed var(--line);
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* 안내 문구 상자 (노란색) */
+.info-box {
+  background: #fffaf0;
+  border: 1px solid #f0d9a8;
+  color: #6b4a00;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+/* ---------- 도움말 (접었다 펴기) ---------- */
+.help-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.help-list details {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.help-list summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.help-list details p,
+.help-list details ol,
+.help-list details ul {
+  margin: 10px 0 0;
+  color: var(--muted);
+}
+
+/* ---------- 하단 ---------- */
+.footer {
+  padding: 24px 0;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ---------- 화면 아래 잠깐 뜨는 안내 메시지 ---------- */
+.notice {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 480px;
+  background: var(--brand);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/* ---------- 모바일 (640px 이하) ---------- */
+@media (max-width: 640px) {
+  .topnav {
+    gap: 14px;
+    font-size: 13px;
+    padding-bottom: 10px;
+  }
+
+  .section {
+    padding: 36px 0;
+  }
+}

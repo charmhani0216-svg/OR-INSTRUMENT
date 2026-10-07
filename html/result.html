@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>학습결과 · OR Instrument Coach</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/learn.css">
+</head>
+<!-- 주소 예시: result.html?session=학습결과번호  (번호가 없으면 가장 최근 결과) -->
+<body data-root="../">
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="../index.html" class="logo">OR Instrument Coach</a>
+      <nav class="topnav">
+        <a href="../index.html#prelearn">사전학습</a>
+        <a href="../index.html#modes">학습모드</a>
+        <a href="../index.html#results">학습결과</a>
+        <a href="../index.html#help">학습방법 · 도움말</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="page-head">
+    <div class="container">
+      <p class="page-label">③ 학습결과 확인</p>
+      <h1 class="page-title" id="page-title">학습결과</h1>
+      <p class="page-desc" id="page-desc"></p>
+    </div>
+  </section>
+
+  <main class="container page-body">
+
+    <!-- 결과가 없을 때 -->
+    <section id="empty-panel" class="panel" hidden>
+      <p>표시할 학습결과가 없습니다.</p>
+      <div class="btn-row">
+        <a href="../index.html" class="btn btn-outline">메인으로</a>
+      </div>
+    </section>
+
+    <div id="result-area" class="stack" hidden>
+      <!-- 요약 수치: js/result.js 가 채웁니다 -->
+      <section>
+        <h2 class="section-title">요약</h2>
+        <div class="stat-grid" id="stat-grid"></div>
+      </section>
+
+      <!-- 다음 학습으로 이어지는 버튼 -->
+      <section class="panel">
+        <h2 class="panel-title">다음 학습</h2>
+        <p class="panel-text" id="next-text"></p>
+        <div class="btn-row" id="next-buttons"></div>
+      </section>
+
+      <!-- 기구별 수행결과 -->
+      <section>
+        <h2 class="section-title">기구별 수행결과</h2>
+        <p class="section-desc">"최초 시도"는 처음 답한 결과, "최종"은 다시 말하기까지 포함한 결과입니다.</p>
+        <div class="table-wrap">
+          <table class="result-table">
+            <thead id="table-head"></thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>OR Instrument Coach · 수술실 입문 학습자를 위한 수술기구 학습</p>
+    </div>
+  </footer>
+
+  <script src="../js/config.js"></script>
+  <script src="../data/surgeries.js"></script>
+  <script src="../data/instruments.js"></script>
+  <script src="../data/appendectomy.js"></script>
+  <script src="../data/cesarean.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/learning-data.js"></script>
+  <script src="../js/result.js"></script>
+</body>
+</html>

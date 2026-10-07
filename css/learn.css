@@ -1,0 +1,374 @@
+/* =============================================
+   학습 화면 공통 디자인
+   ---------------------------------------------
+   사전학습, 수술 선택, Doctor Mode, Scrub Mode, 학습결과
+   페이지(html 폴더)에서 함께 쓰는 디자인입니다.
+   ============================================= */
+
+/* ---------- 페이지 제목 영역 ---------- */
+.page-head {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  padding: 32px 0 28px;
+}
+
+.page-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.page-title {
+  font-size: 30px;
+  line-height: 1.25;
+  color: var(--brand);
+  margin-bottom: 8px;
+}
+
+.page-desc {
+  color: var(--muted);
+}
+
+/* 핵심 학습행동 (예: 보고 → 판단하고 → 말하기) */
+.key-action {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.key-prelearn { background: var(--prelearn-soft); color: var(--prelearn); }
+.key-doctor   { background: var(--doctor-soft);   color: var(--doctor); }
+.key-scrub    { background: var(--scrub-soft);    color: var(--scrub); }
+
+.page-body {
+  padding: 28px 0 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- 장치 확인 (스피커 / 마이크 테스트) ---------- */
+.device-check {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.device-step-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.device-status {
+  font-size: 14px;
+  color: var(--muted);
+  min-height: 1.6em;
+}
+
+.device-status.is-ok {
+  color: var(--correct);
+  font-weight: 700;
+}
+
+.device-status.is-bad {
+  color: var(--wrong);
+  font-weight: 700;
+}
+
+/* ---------- 문제 / 학습 카드 ---------- */
+.learn-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.learn-card-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.progress-text {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+/* 이미지 상자 (기구 이미지 / 수술부위 이미지) */
+.image-box {
+  min-height: 220px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.image-box img {
+  max-height: 360px;
+  object-fit: contain;
+}
+
+/* 기구 이름 */
+.instrument-name {
+  font-size: 28px;
+  line-height: 1.3;
+  color: var(--brand);
+}
+
+.instrument-name-ko {
+  color: var(--muted);
+  font-size: 17px;
+}
+
+/* 말하기 / 듣기 버튼 묶음 */
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 음성인식 중일 때 마이크 버튼 깜빡임 */
+.btn.is-listening {
+  animation: listening 1s ease-in-out infinite;
+}
+
+@keyframes listening {
+  50% { opacity: 0.6; }
+}
+
+.status-text {
+  font-size: 14px;
+  color: var(--muted);
+  min-height: 1.6em;
+}
+
+/* ---------- O / X 피드백 ---------- */
+.feedback {
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.feedback.is-correct {
+  background: var(--correct-soft);
+  border: 1px solid var(--correct);
+}
+
+.feedback.is-wrong {
+  background: var(--wrong-soft);
+  border: 1px solid var(--wrong);
+}
+
+.feedback-mark {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.is-correct .feedback-mark { color: var(--correct); }
+.is-wrong   .feedback-mark { color: var(--wrong); }
+
+.feedback-text p + p {
+  margin-top: 4px;
+}
+
+/* 정답 공개 문구 */
+.answer-reveal {
+  font-weight: 700;
+  color: var(--brand);
+}
+
+/* 키보드 입력 (음성인식을 쓸 수 없는 브라우저용) */
+.text-fallback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.text-fallback input {
+  flex: 1;
+  min-width: 180px;
+  font: inherit;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* ---------- 목록 / 요약 ---------- */
+.simple-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.summary-big {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+/* ---------- 수술 선택 카드 ---------- */
+.surgery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.surgery-card {
+  /* button 기본 모양 지우기 */
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+
+  background: var(--surface);
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.surgery-card:hover:not(:disabled) {
+  border-color: var(--brand);
+}
+
+.surgery-card:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.surgery-image {
+  height: 150px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.surgery-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.surgery-info {
+  padding: 16px 18px 18px;
+}
+
+.surgery-name {
+  font-size: 20px;
+}
+
+.surgery-en {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.surgery-count {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+/* ---------- 학습결과 ---------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.stat-note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* 기구별 수행결과 표 (좁은 화면에서는 표만 좌우로 스크롤) */
+.table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 640px;
+}
+
+.result-table th,
+.result-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.result-table th {
+  background: var(--bg);
+  font-weight: 700;
+}
+
+.result-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.mark-o { color: var(--correct); font-weight: 700; }
+.mark-x { color: var(--wrong);   font-weight: 700; }
+
+/* ---------- 모바일 (640px 이하) ---------- */
+@media (max-width: 640px) {
+  .page-title {
+    font-size: 24px;
+  }
+
+  .learn-card {
+    padding: 18px;
+  }
+
+  .instrument-name {
+    font-size: 23px;
+  }
+}
+
+/* 여러 구역을 세로로 간격을 두고 쌓기 */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

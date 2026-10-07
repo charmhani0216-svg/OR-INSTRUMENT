@@ -1,0 +1,46 @@
+/* =============================================
+   Doctor Mode 전용 디자인 (html/doctor.html)
+   공통 디자인은 css/style.css, css/learn.css 에 있습니다.
+   ============================================= */
+
+/* 수술 단계 이름 */
+.situation-step {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--doctor-soft);
+  color: var(--doctor);
+}
+
+/* 수술 진행상황 설명 */
+.situation-text {
+  font-size: 18px;
+}
+
+/* 질문 문구 */
+.doctor-prompt {
+  font-weight: 700;
+  color: var(--doctor);
+}
+
+/* 수술부위 이미지 + 설명을 넓은 화면에서는 나란히 */
+.situation-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.situation-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .situation-layout {
+    grid-template-columns: 1fr;
+  }
+}

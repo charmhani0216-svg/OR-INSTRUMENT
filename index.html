@@ -10,7 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <!-- 메인 화면 디자인 파일 -->
+  <!-- 디자인 파일: 공통 디자인 → 메인 화면 전용 디자인 순서 -->
+  <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/home.css">
 </head>
 <body>
@@ -20,82 +21,120 @@
     <div class="container topbar-inner">
       <a href="index.html" class="logo">OR Instrument Coach</a>
       <nav class="topnav">
-        <a href="#modes">학습 모드</a>
-        <a href="#surgeries">수술 선택</a>
-        <a href="#progress">학습 현황</a>
-        <a href="#help">도움말</a>
+        <a href="#prelearn">사전학습</a>
+        <a href="#modes">학습모드</a>
+        <a href="#results">학습결과</a>
+        <a href="#help">학습방법 · 도움말</a>
       </nav>
     </div>
   </header>
 
   <main>
 
-    <!-- ===== ① 사이트 타이틀 / 소개 ===== -->
+    <!-- ===== 사이트 타이틀 / 학습 흐름 ===== -->
     <section class="hero">
       <div class="container">
         <p class="hero-label">수술기구 학습 콘텐츠</p>
         <h1 class="hero-title">OR Instrument Coach</h1>
         <p class="hero-desc">
-          수술 흐름을 이해하고, 기구를 <strong>보고 · 듣고 · 선택하며</strong> 익히는 수술기구 학습
+          수술 흐름에 맞는 수술기구를 <strong>말하고 · 듣고 · 선택하며</strong> 익히는 학습
         </p>
-        <p class="hero-target">학습 대상 <span>간호학생 · 간호사</span></p>
+        <p class="hero-target">학습 대상 <span>수술실 입문 학습자</span></p>
 
-        <!-- 학습 순서 안내 -->
+        <!-- 학습 흐름 ① → ② → ③ (누르면 해당 구역으로 이동) -->
         <ol class="flow">
-          <li><span class="flow-num">1</span>학습 모드 선택</li>
-          <li><span class="flow-num">2</span>수술 선택</li>
-          <li><span class="flow-num">3</span>문제 풀고 피드백 확인</li>
+          <li><a href="#prelearn"><span class="flow-num">1</span> 사전학습</a></li>
+          <li class="flow-arrow" aria-hidden="true">→</li>
+          <li><a href="#modes"><span class="flow-num">2</span> 학습모드 · 수술 선택</a></li>
+          <li class="flow-arrow" aria-hidden="true">→</li>
+          <li><a href="#results"><span class="flow-num">3</span> 학습결과 확인</a></li>
         </ol>
+        <p class="flow-loop">
+          ↺ 학습결과에서 틀린 기구는 <strong>사전학습의 맞춤 재학습</strong>으로 다시 익히고, 틀렸던 문제에 다시 도전합니다.
+        </p>
       </div>
     </section>
 
-    <!-- ===== ② 학습 모드 선택 ===== -->
-    <section id="modes" class="section">
+    <!-- ===== ① 사전학습 ===== -->
+    <section id="prelearn" class="section">
       <div class="container">
-        <h2 class="section-title">학습 모드</h2>
-        <p class="section-desc">두 가지 방법으로 수술기구를 학습합니다. 원하는 모드를 선택하세요.</p>
+        <h2 class="section-title"><span class="step-num">1</span> 사전학습</h2>
+        <p class="section-desc">학습모드를 시작하기 전에 수술기구의 모습, 명칭, 발음을 먼저 익힙니다.</p>
+
+        <article class="mode-card mode-prelearn prelearn-layout">
+          <div class="mode-head">
+            <span class="mode-tag">먼저 익히기</span>
+            <h3 class="mode-name">사전학습</h3>
+            <p class="mode-sub">수술기구를 보고, 명칭을 듣고, 직접 말하며 익힙니다.</p>
+          </div>
+          <div class="mode-body">
+            <p class="mode-key-label">학습 순서</p>
+            <ol class="mode-steps">
+              <li>보기</li>
+              <li>듣기</li>
+              <li>말하기</li>
+            </ol>
+
+            <!-- 학습 준비도: js/home.js 가 저장된 사전학습 기록을 보고 채웁니다 -->
+            <div class="readiness">
+              <p class="mode-key-label">나의 학습 준비도</p>
+              <p class="readiness-value" id="readiness-value">0%</p>
+              <div class="bar"><div class="bar-fill" id="readiness-bar" style="width: 0%;"></div></div>
+              <p class="readiness-text" id="readiness-text"></p>
+            </div>
+
+            <a href="html/prelearn.html" class="btn btn-prelearn">사전학습 시작</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== ② 학습모드 · 수술 선택 ===== -->
+    <section id="modes" class="section section-alt">
+      <div class="container">
+        <h2 class="section-title"><span class="step-num">2</span> 학습모드 · 수술 선택</h2>
+        <p class="section-desc">학습모드를 고른 뒤, 그 모드 안에서 학습할 수술을 선택합니다.</p>
+
+        <!-- 사전학습 기준을 아직 충족하지 못했을 때 보여주는 안내 (js/home.js 가 표시) -->
+        <p class="info-box mode-lock-info" id="mode-lock-info" hidden></p>
 
         <div class="mode-grid">
 
           <!-- Doctor Mode 카드 -->
           <article class="mode-card mode-doctor">
             <div class="mode-head">
-              <span class="mode-tag">판단하기</span>
+              <span class="mode-tag">판단하고 말하기</span>
               <h3 class="mode-name">Doctor Mode</h3>
-              <p class="mode-sub">수술 진행상황을 보고 필요한 기구를 판단합니다.</p>
+              <p class="mode-sub">수술 진행상황과 수술부위 이미지를 보고 현재 단계에서 필요한 기구를 판단하여 직접 말합니다.</p>
             </div>
             <div class="mode-body">
               <p class="mode-key-label">핵심 학습</p>
               <ol class="mode-steps">
-                <li>수술 흐름 이해</li>
-                <li>필요한 기구 판단</li>
-                <li>다음 기구 예측</li>
+                <li>보고</li>
+                <li>판단하고</li>
+                <li>말하기</li>
               </ol>
-              <p class="mode-note">
-                현재 수술 단계와 상황을 읽고, 그 단계에서 필요한 기구를 선택지에서 고릅니다.
-              </p>
-              <button type="button" class="btn btn-doctor" data-mode="Doctor Mode">시작하기</button>
+              <p class="mode-note">시작 전에 마이크 테스트를 할 수 있습니다.</p>
+              <a href="html/surgery-select.html?mode=doctor" class="btn btn-doctor" data-mode-link>수술 선택하기</a>
             </div>
           </article>
 
           <!-- Scrub Mode 카드 -->
           <article class="mode-card mode-scrub">
             <div class="mode-head">
-              <span class="mode-tag">듣고 찾기</span>
+              <span class="mode-tag">듣고 선택하기</span>
               <h3 class="mode-name">Scrub Mode</h3>
-              <p class="mode-sub">의사의 기구 요청을 듣고 올바른 기구를 선택합니다.</p>
+              <p class="mode-sub">의사가 요청하는 수술기구 이름을 듣고 여러 기구 이미지 중 정확한 기구를 선택합니다.</p>
             </div>
             <div class="mode-body">
               <p class="mode-key-label">핵심 학습</p>
               <ol class="mode-steps">
-                <li>기구명 듣기</li>
-                <li>기구 식별</li>
-                <li>정확한 기구 선택</li>
+                <li>듣고</li>
+                <li>찾아서</li>
+                <li>선택하기</li>
               </ol>
-              <p class="mode-note">
-                예) "메첸바움 주세요." 음성을 듣고, 비슷한 기구들 중에서 정확한 기구를 고릅니다.
-              </p>
-              <button type="button" class="btn btn-scrub" data-mode="Scrub Mode">시작하기</button>
+              <p class="mode-note">시작 전에 스피커 테스트를 할 수 있습니다.</p>
+              <a href="html/surgery-select.html?mode=scrub" class="btn btn-scrub" data-mode-link>수술 선택하기</a>
             </div>
           </article>
 
@@ -103,100 +142,98 @@
       </div>
     </section>
 
-    <!-- ===== ③ 수술 선택 ===== -->
-    <section id="surgeries" class="section section-alt">
+    <!-- ===== ③ 학습결과 확인 ===== -->
+    <section id="results" class="section">
       <div class="container">
-        <h2 class="section-title">수술 선택</h2>
-        <p class="section-desc">현재 학습할 수 있는 수술입니다. 카드를 눌러 학습할 수술을 선택하세요.</p>
-
-        <!-- 수술 카드는 js/home.js 가 data/surgeries.js 목록을 읽어서 여기에 자동으로 넣습니다 -->
-        <div id="surgery-list" class="surgery-grid"></div>
-
-        <p id="selected-surgery" class="selected-text">선택한 수술: 없음</p>
-      </div>
-    </section>
-
-    <!-- ===== ④ 학습 진행 상태 ===== -->
-    <section id="progress" class="section">
-      <div class="container">
-        <h2 class="section-title">
-          나의 학습 현황
-          <span class="badge-sample">예시 화면</span>
-        </h2>
+        <h2 class="section-title"><span class="step-num">3</span> 학습결과 확인</h2>
         <p class="section-desc">
-          아래 내용은 화면 구성 예시입니다. 학습 기록 저장 기능은 다음 단계에서 연결됩니다.
+          최근 학습결과입니다. 결과 화면에서 틀린 기구만 골라 맞춤 재학습을 할 수 있습니다.
+          (학습 기록은 지금 사용 중인 이 브라우저에만 저장됩니다)
         </p>
 
-        <div class="progress-grid">
+        <!-- 학습결과 목록: js/home.js 가 저장된 기록을 보고 채웁니다 -->
+        <ul id="result-list" class="result-list"></ul>
+        <p id="result-empty" class="empty-text" hidden>아직 학습결과가 없습니다. 사전학습부터 시작해 보세요.</p>
 
-          <!-- 최근 학습 -->
-          <div class="panel">
-            <h3 class="panel-title">최근 학습</h3>
-            <ul class="recent-list">
-              <li><span class="chip chip-doctor">Doctor</span> 충수절제술 · 피부 절개 단계</li>
-              <li><span class="chip chip-scrub">Scrub</span> 제왕절개술 · 기구 요청 5문제</li>
-            </ul>
-          </div>
-
-          <!-- 학습 진행률 -->
-          <div class="panel">
-            <h3 class="panel-title">학습 진행률</h3>
-            <div class="bar-row">
-              <span class="bar-label">충수절제술</span>
-              <div class="bar"><div class="bar-fill" style="width: 40%;"></div></div>
-              <span class="bar-value">40%</span>
-            </div>
-            <div class="bar-row">
-              <span class="bar-label">제왕절개술</span>
-              <div class="bar"><div class="bar-fill" style="width: 15%;"></div></div>
-              <span class="bar-value">15%</span>
-            </div>
-          </div>
-
-          <!-- 이어서 학습하기 -->
-          <div class="panel">
-            <h3 class="panel-title">이어서 학습하기</h3>
-            <p class="panel-text">마지막으로 학습하던 단계부터 다시 시작합니다.</p>
-            <button type="button" class="btn btn-outline" disabled>준비 중</button>
-          </div>
-
-          <!-- 틀린 기구 복습 -->
-          <div class="panel">
-            <h3 class="panel-title">틀린 기구 복습</h3>
-            <ul class="wrong-list">
-              <li>Metzenbaum scissors</li>
-              <li>Kelly forceps</li>
-              <li>Allis forceps</li>
-            </ul>
-            <button type="button" class="btn btn-outline" disabled>준비 중</button>
-          </div>
-
+        <div class="data-tools">
+          <button type="button" class="btn btn-outline btn-small" id="btn-clear-data">이 브라우저의 학습 기록 지우기</button>
         </div>
       </div>
     </section>
 
-    <!-- ===== ⑤ 사용방법 / 도움말 ===== -->
+    <!-- ===== 학습방법 · 도움말 ===== -->
     <!-- <details> 태그는 클릭하면 내용이 펼쳐지는 기본 HTML 기능입니다 (JavaScript 필요 없음) -->
     <section id="help" class="section section-alt">
       <div class="container">
-        <h2 class="section-title">사용방법 · 도움말</h2>
+        <h2 class="section-title">학습방법 · 도움말</h2>
 
         <div class="help-list">
           <details>
-            <summary>어떤 순서로 학습하나요?</summary>
-            <p>학습 모드(Doctor 또는 Scrub)를 고르고, 학습할 수술을 선택한 뒤 문제를 풉니다. 문제마다 정답/오답 피드백이 나오고 다음 문제로 넘어갑니다.</p>
+            <summary>1. 사전학습은 무엇인가요?</summary>
+            <p>
+              학습모드에 들어가기 전에 수술기구의 모습, 정확한 명칭, 발음을 먼저 익히는 단계입니다.
+              기구 이미지를 보고 → 스피커 버튼으로 기구명을 듣고 → 마이크 버튼을 눌러 따라 말하면,
+              말한 내용이 등록된 기구명과 맞는지 O/X로 알려줍니다.
+              충분히 익숙해질 때까지 몇 번이든 다시 말해 볼 수 있습니다.
+            </p>
+            <p>
+              ※ O/X는 "발음이 얼마나 정확한지"를 점수로 매기는 것이 아니라,
+              말한 기구명이 제대로 인식되었는지(기구명 음성인식 성공)를 알려주는 것입니다.
+            </p>
           </details>
           <details>
-            <summary>Doctor Mode와 Scrub Mode는 무엇이 다른가요?</summary>
-            <p><strong>Doctor Mode</strong>는 "지금 이 단계에서 어떤 기구가 필요할까?"를 스스로 판단하는 연습입니다. <strong>Scrub Mode</strong>는 의사가 부르는 기구 이름을 듣고 해당 기구를 빠르게 찾는 연습입니다.</p>
+            <summary>2. 학습을 시작하기 전에 무엇을 확인해야 하나요?</summary>
+            <ol>
+              <li><strong>스피커 테스트</strong>: 기구명과 의사의 요청을 들을 수 있도록 소리가 잘 나오는지 확인합니다.</li>
+              <li><strong>마이크 테스트</strong>: 내가 말한 기구명이 글자로 잘 나타나는지 확인합니다.</li>
+            </ol>
+            <p>
+              Chrome 또는 Edge 브라우저를 사용하고, 처음 마이크를 쓸 때 나오는 "마이크 사용 허용" 창에서 <strong>허용</strong>을 눌러 주세요.
+              조용한 곳에서 이어폰을 사용하면 더 정확하게 인식됩니다.
+            </p>
           </details>
           <details>
-            <summary>Doctor Mode의 난이도는 어떻게 구성되나요?</summary>
-            <p>기본: 기구 이미지를 보고 이름 고르기 → 중간: 수술 단계와 기구 이미지를 보고 이름 고르기 → 심화: 수술 상황만 보고 필요한 기구 이미지 고르기 순서로 구성될 예정입니다.</p>
+            <summary>3. Doctor Mode는 어떻게 학습하나요?</summary>
+            <p>
+              수술 진행상황 설명과 수술부위 이미지를 <strong>보고</strong>,
+              지금 단계에서 어떤 기구가 필요한지 <strong>판단하고</strong>,
+              마이크 버튼을 눌러 기구명을 <strong>직접 말합니다</strong>.
+              말한 즉시 맞았는지 알려줍니다.
+            </p>
+            <p>
+              말이 잘못 인식된 것 같으면 "다시 말하기"를 누를 수 있습니다.
+              다만 처음 말한 답도 함께 기록되므로, 결과 화면에는 "최초 시도 정답률"과 "최종 성공률"이 따로 표시됩니다.
+            </p>
           </details>
           <details>
-            <summary>Scrub Mode의 음성은 어떤 발음인가요?</summary>
-            <p>한국 수술실에서 실제로 사용하는 기구 호출 표현과 발음을 기준으로, 미리 제작·검토한 음성파일을 재생합니다. 모든 학습자가 같은 음성을 듣게 됩니다. 소리가 나오도록 스피커나 이어폰을 준비하세요.</p>
+            <summary>4. Scrub Mode는 어떻게 학습하나요?</summary>
+            <p>
+              의사가 요청하는 기구 이름을 <strong>듣고</strong>,
+              화면의 여러 기구 이미지 중에서 <strong>찾아</strong>
+              정확한 기구를 <strong>선택합니다</strong>.
+              선택지에는 모양이나 쓰임이 비슷해 헷갈리기 쉬운 기구가 함께 나옵니다.
+            </p>
+          </details>
+          <details>
+            <summary>5. 어떤 순서로 학습하나요?</summary>
+            <ol>
+              <li>사전학습으로 기구의 모습·명칭·발음을 익힙니다.</li>
+              <li>학습 준비도가 기준(<span class="js-threshold"></span>)에 도달하면 학습모드를 선택할 수 있습니다.</li>
+              <li>Doctor Mode 또는 Scrub Mode를 고르고, 그 안에서 수술을 선택해 문제를 풉니다.</li>
+              <li>학습결과를 확인합니다.</li>
+              <li>틀린 기구가 있으면 맞춤 재학습 후 틀렸던 문제에 다시 도전합니다.</li>
+            </ol>
+          </details>
+          <details>
+            <summary>6. 학습결과와 맞춤 재학습은 어떻게 이용하나요?</summary>
+            <p>
+              학습결과 화면에서는 처음 답한 것의 정답률(최초 시도 정답률), 다시 말하기를 포함한 최종 성공률,
+              다시 말하기 횟수, 기구별 결과, 반응시간을 확인할 수 있습니다.
+            </p>
+            <p>
+              "틀린 기구 다시 학습"을 누르면 전체 기구가 아니라 <strong>내가 틀린 기구만</strong> 사전학습 방식(보기 → 듣기 → 말하기)으로 다시 익힙니다.
+              재학습을 마치면 "틀렸던 문제 다시 도전"으로 그 문제들만 다시 풀어볼 수 있습니다.
+            </p>
           </details>
         </div>
       </div>
@@ -207,15 +244,19 @@
   <!-- ===== 하단 ===== -->
   <footer class="footer">
     <div class="container">
-      <p>OR Instrument Coach · 간호학생과 간호사를 위한 수술기구 학습</p>
+      <p>OR Instrument Coach · 수술실 입문 학습자를 위한 수술기구 학습</p>
     </div>
   </footer>
 
-  <!-- 아직 만들지 않은 기능을 눌렀을 때 보여줄 안내 메시지 상자 -->
+  <!-- 화면 아래 잠깐 뜨는 안내 메시지 상자 -->
   <div id="notice" class="notice" hidden></div>
 
-  <!-- JavaScript 파일 (순서 중요: 데이터 먼저, 기능 나중) -->
+  <!-- JavaScript 파일 (순서 중요: 설정 → 데이터 → 공통 기능 → 이 페이지 기능) -->
+  <script src="js/config.js"></script>
   <script src="data/surgeries.js"></script>
+  <script src="data/instruments.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/learning-data.js"></script>
   <script src="js/home.js"></script>
 </body>
 </html>

@@ -1,97 +1,11 @@
 /* =============================================
-   메인 화면(index.html) 디자인
+   메인 화면(index.html) 전용 디자인
    ---------------------------------------------
-   색상은 아래 :root 에 모아두었습니다.
-   여기 값만 바꾸면 사이트 전체 색이 함께 바뀝니다.
+   색상, 버튼, 카드 등 공통 디자인은 css/style.css 에 있습니다.
+   이 파일에는 메인 화면에서만 쓰는 디자인만 있습니다.
    ============================================= */
 
-:root {
-  /* 기본 색 */
-  --bg: #f4f7f8;          /* 화면 배경 */
-  --surface: #ffffff;     /* 카드 배경 */
-  --surface-alt: #eaf0f2; /* 구역 구분용 배경 */
-  --text: #1c2b33;        /* 기본 글자 */
-  --muted: #5b6b73;       /* 보조 글자 */
-  --line: #d9e2e6;        /* 테두리 선 */
-  --brand: #0f3b45;       /* 상단 바 (수술실 짙은 청록) */
-
-  /* Doctor Mode 색 (파란 계열) */
-  --doctor: #1f5f99;
-  --doctor-soft: #e8f0f8;
-
-  /* Scrub Mode 색 (수술복 초록 계열) */
-  --scrub: #157a63;
-  --scrub-soft: #e4f3ee;
-
-  --radius: 12px;
-}
-
-/* ---------- 기본 설정 ---------- */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-h1, h2, h3, p {
-  margin: 0;
-}
-
-a {
-  color: inherit;
-}
-
-/* 내용 가운데 정렬 + 최대 너비 */
-.container {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
-
-/* ---------- 상단 메뉴 바 ---------- */
-.topbar {
-  background: var(--brand);
-  color: #fff;
-}
-
-.topbar-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 56px;
-  flex-wrap: wrap;
-}
-
-.logo {
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.2px;
-}
-
-.topnav {
-  display: flex;
-  gap: 18px;
-  font-size: 14px;
-}
-
-.topnav a {
-  text-decoration: none;
-  opacity: 0.85;
-}
-
-.topnav a:hover {
-  opacity: 1;
-  text-decoration: underline;
-}
-
-/* ---------- ① 타이틀 영역 ---------- */
+/* ---------- 타이틀 영역 ---------- */
 .hero {
   background: var(--surface);
   border-bottom: 1px solid var(--line);
@@ -134,22 +48,42 @@ a {
   font-weight: 500;
 }
 
-/* 학습 순서 1 → 2 → 3 */
+/* ---------- 학습 흐름 ① → ② → ③ ---------- */
 .flow {
   list-style: none;
   padding: 0;
   margin: 28px 0 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 24px;
+  align-items: center;
+  gap: 8px 12px;
   font-size: 15px;
-  color: var(--muted);
 }
 
 .flow li {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-weight: 500;
+}
+
+.flow a {
+  text-decoration: none;
+}
+
+/* 단계 사이 → 표시 */
+.flow-arrow {
+  color: var(--muted);
+}
+
+.flow .flow-arrow {
+  border: 0;
+  background: none;
+  padding: 0;
 }
 
 .flow-num {
@@ -165,66 +99,31 @@ a {
   font-weight: 700;
 }
 
-/* ---------- 공통 구역 ---------- */
-.section {
-  padding: 48px 0;
+/* 순환 학습 안내 (③ → ① 맞춤 재학습) */
+.flow-loop {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--muted);
 }
 
-.section-alt {
-  background: var(--surface-alt);
+.flow-loop strong {
+  color: var(--prelearn);
 }
 
-.section-title {
-  font-size: 24px;
-  margin-bottom: 6px;
-  display: flex;
+/* ---------- 구역 제목 앞 번호 ---------- */
+.step-num {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-}
-
-.section-desc {
-  color: var(--muted);
-  margin-bottom: 24px;
-}
-
-/* ---------- 공통 버튼 ---------- */
-.btn {
-  display: inline-block;
-  padding: 10px 22px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.btn-doctor {
-  background: var(--doctor);
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--brand);
   color: #fff;
+  font-size: 15px;
 }
 
-.btn-scrub {
-  background: var(--scrub);
-  color: #fff;
-}
-
-.btn-doctor:hover,
-.btn-scrub:hover {
-  filter: brightness(1.1);
-}
-
-.btn-outline {
-  background: transparent;
-  border-color: var(--line);
-  color: var(--muted);
-}
-
-.btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.7;
-}
-
-/* ---------- ② 학습 모드 카드 ---------- */
+/* ---------- 사전학습 카드 / 모드 카드 ---------- */
 .mode-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -240,14 +139,15 @@ a {
   flex-direction: column;
 }
 
-/* 카드 윗부분: 모드별 색으로 구분 */
+/* 카드 윗부분: 색으로 구분 */
 .mode-head {
   padding: 24px;
   color: #fff;
 }
 
-.mode-doctor .mode-head { background: var(--doctor); }
-.mode-scrub  .mode-head { background: var(--scrub); }
+.mode-prelearn .mode-head { background: var(--prelearn); }
+.mode-doctor   .mode-head { background: var(--doctor); }
+.mode-scrub    .mode-head { background: var(--scrub); }
 
 .mode-tag {
   display: inline-block;
@@ -281,7 +181,7 @@ a {
   color: var(--muted);
 }
 
-/* 핵심 학습 3단계 (화살표로 연결) */
+/* 핵심 학습 단계 (화살표로 연결) */
 .mode-steps {
   list-style: none;
   padding: 0;
@@ -299,8 +199,9 @@ a {
   font-size: 15px;
 }
 
-.mode-doctor .mode-steps li { background: var(--doctor-soft); color: var(--doctor); }
-.mode-scrub  .mode-steps li { background: var(--scrub-soft);  color: var(--scrub); }
+.mode-prelearn .mode-steps li { background: var(--prelearn-soft); color: var(--prelearn); }
+.mode-doctor   .mode-steps li { background: var(--doctor-soft);   color: var(--doctor); }
+.mode-scrub    .mode-steps li { background: var(--scrub-soft);    color: var(--scrub); }
 
 /* 단계 사이에 → 표시 */
 .mode-steps li + li::before {
@@ -320,171 +221,39 @@ a {
   align-self: flex-start;
 }
 
-/* ---------- ③ 수술 선택 카드 ---------- */
-.surgery-grid {
+/* 사전학습 카드는 가로로 길게 */
+.prelearn-layout {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: 1.4fr 1fr;
 }
 
-.surgery-card {
-  /* button 기본 모양 지우기 */
-  font: inherit;
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-  padding: 0;
-
-  background: var(--surface);
-  border: 2px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-
-.surgery-card:hover {
-  border-color: var(--muted);
-}
-
-/* 선택된 카드 */
-.surgery-card.is-selected {
-  border-color: var(--brand);
-  box-shadow: 0 0 0 3px rgba(15, 59, 69, 0.15);
-}
-
-/* 대표 이미지 자리 */
-.surgery-image {
-  height: 150px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--line);
+.prelearn-layout .mode-head {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: flex-start;  /* 태그가 가로로 늘어나지 않도록 */
 }
 
-.surgery-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.image-empty {
-  color: var(--muted);
-  font-size: 14px;
-  border: 1px dashed var(--line);
-  padding: 8px 14px;
-  border-radius: 8px;
-}
-
-.surgery-info {
-  padding: 16px 18px 18px;
-}
-
-.surgery-name {
-  font-size: 20px;
-}
-
-.surgery-en {
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.surgery-summary {
-  font-size: 15px;
-}
-
-.selected-text {
-  margin-top: 16px;
-  font-weight: 500;
-  color: var(--brand);
-}
-
-/* ---------- ④ 학습 현황 ---------- */
-.badge-sample {
-  font-size: 12px;
-  font-weight: 500;
-  padding: 2px 10px;
-  border-radius: 999px;
-  background: #fff4de;
-  color: #8a5a00;
-  border: 1px solid #f0d9a8;
-}
-
-.progress-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-
-.panel {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 20px;
+/* 학습 준비도 표시 */
+.readiness {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 
-.panel-title {
-  font-size: 16px;
-}
-
-.panel-text {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.panel .btn {
-  margin-top: auto;
-  align-self: flex-start;
-  padding: 8px 16px;
-  font-size: 14px;
-}
-
-.recent-list,
-.wrong-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.wrong-list li {
-  padding-left: 12px;
-  border-left: 3px solid #c0392b;
-}
-
-.chip {
-  display: inline-block;
-  font-size: 12px;
+.readiness-value {
+  font-size: 28px;
   font-weight: 700;
-  padding: 0 8px;
-  border-radius: 6px;
-  margin-right: 4px;
+  color: var(--prelearn);
 }
 
-.chip-doctor { background: var(--doctor-soft); color: var(--doctor); }
-.chip-scrub  { background: var(--scrub-soft);  color: var(--scrub); }
-
-/* 진행률 막대 */
-.bar-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.readiness-text {
   font-size: 14px;
+  color: var(--muted);
 }
 
-.bar-label {
-  width: 72px;
-  flex-shrink: 0;
-}
-
+/* 진행 막대 */
 .bar {
-  flex: 1;
   height: 8px;
   background: var(--bg);
   border-radius: 999px;
@@ -493,77 +262,62 @@ a {
 
 .bar-fill {
   height: 100%;
-  background: var(--brand);
+  background: var(--prelearn);
 }
 
-.bar-value {
-  width: 36px;
-  text-align: right;
-  color: var(--muted);
+/* 모드 잠금 안내 */
+.mode-lock-info {
+  margin-bottom: 16px;
 }
 
-/* ---------- ⑤ 도움말 ---------- */
-.help-list {
+/* ---------- 학습결과 목록 ---------- */
+.result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.help-list details {
+.result-item {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 10px;
   padding: 14px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
 }
 
-.help-list summary {
-  cursor: pointer;
+.result-item-title {
   font-weight: 700;
 }
 
-.help-list details p {
-  margin-top: 10px;
+.result-item-meta {
+  font-size: 14px;
   color: var(--muted);
 }
 
-/* ---------- 하단 ---------- */
-.footer {
-  padding: 24px 0;
+.empty-text {
   color: var(--muted);
-  font-size: 13px;
-  text-align: center;
-}
-
-/* ---------- 준비 중 안내 메시지 상자 ---------- */
-.notice {
-  position: fixed;
-  left: 50%;
-  bottom: 24px;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 480px;
-  background: var(--brand);
-  color: #fff;
-  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px dashed var(--line);
   border-radius: 10px;
+  padding: 18px;
   text-align: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-.notice[hidden] {
-  display: none;
+.data-tools {
+  margin-top: 16px;
+  text-align: right;
 }
 
 /* =============================================
    반응형: 화면 폭에 따라 배치 바꾸기
    ============================================= */
-
-/* 태블릿 (900px 이하): 학습 현황 2칸 */
-@media (max-width: 900px) {
-  .progress-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 /* 모바일 (640px 이하): 모두 1칸 */
 @media (max-width: 640px) {
@@ -579,18 +333,8 @@ a {
     font-size: 16px;
   }
 
-  .topnav {
-    gap: 14px;
-    font-size: 13px;
-    padding-bottom: 10px;
-  }
-
   .mode-grid,
-  .progress-grid {
+  .prelearn-layout {
     grid-template-columns: 1fr;
-  }
-
-  .section {
-    padding: 36px 0;
   }
 }
